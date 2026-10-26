@@ -66,17 +66,28 @@ Socket.IO uses the same HTTP server and port as the website. Render's free insta
 - The Robot loses one coin each night and receives one bonus coin for each distinct human who offers it a deal. It targets a lowest- or highest-balance eligible human.
 - If the Robot finishes tied for last or outright last, the result is collective defeat. Otherwise, the highest-scoring human wins unless the Robot is uniquely first, in which case the Robot wins.
 
-## Implemented balancing and simplifications
+## Current role abilities
 
-- Every role has one ability and a modest +2 secret-objective reward. Ability bonuses are tallied separately from deal income.
-- Vampire, Werewolf, Fixer, Ghost, Counterfeiter, and Guardian bonuses are handled server-side. Detective can inspect a previous-night deal category; the guess tracking is a minimal first-version implementation and the client does not yet provide a dedicated guess panel. Mimic's once-per-game target selection is automatic on its first accepted deal rather than a separate target-pick screen.
-- The Robot chooses a target from current lowest/highest balances and uses configurable-in-code random choices for deal type and Split/Steal. Its behavior is intentionally simple and does not inspect roles or private chat.
-- Private messages are routed only to the two participants after a mutually accepted deal, and are disabled outside the night phase. Chat messages are limited to 300 characters and rate-limited.
-- Room state is in memory. Use a persistent store and a stronger session-token scheme before treating this as a production service for strangers.
+Each game assigns one unique role to each human player from this eight-role pool:
 
-## Important testing note
+- **Vampire:** +1 coin for each distinct human deal partner per game.
+- **Werewolf:** +1 for each successful Risky Deal, maximum four bonuses.
+- **Mummy:** +1 for each successful Basic Deal, maximum three bonuses.
+- **Ghost:** +1 when another player explicitly rejects the Ghost's offer.
+- **Detective:** one private exact-role investigation per night; each human deal partner loses 1 coin, at most once per night.
+- **Serial Killer:** after the second successful deal with a target, may choose to make that target lose 2 coins while gaining 2 bonus coins. One activation per target.
+- **Zombie:** successful deal partners become infected immediately. Players infected earlier spread infection to their own deal partners at the end of the following night. If every roster participant, including the Robot, is infected at game end, the original Zombie wins alone.
+- **Dragon:** +3 for a successful deal with a player who explicitly rejected another offer during the immediately preceding night; maximum two activations.
 
-This repository is a complete playable first implementation, but you should run the multiplayer scenarios below before inviting a group. Do not assume every edge case has been proven just because the app starts.
+Role decisions, deal outcomes, coin adjustments, investigation history, rejection records, and infection scheduling are validated and maintained on the server. The in-game **? / My Role** button displays private role rules and current progress. Detective history remains available across night transitions and ordinary reconnects while the room exists in memory.
+
+The Robot chooses a target from current lowest/highest balances and uses configurable-in-code random choices for deal type and Split/Steal. Its behavior is intentionally simple and does not inspect roles or private chat. Private messages are routed only to the two participants after a mutually accepted deal, and are disabled outside the night phase. Chat messages are limited to 300 characters and rate-limited.
+
+Room state is in memory. It survives ordinary client reconnects while the server process remains alive, but not a complete server restart. A persistent store and stronger session-token scheme would be needed before treating this as a production service for strangers.
+
+## Testing status
+
+`npm test` runs the Risky Deal payout tests and unit tests for role-system predicates. Syntax checks should also be run for the server and frontend. These automated tests do not replace full multiplayer playtesting.
 
 - Test three and eight humans, host disconnects, and a server restart.
 - Test every payout combination and the mixed Basic/Risky offer rule.
