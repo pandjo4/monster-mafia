@@ -93,3 +93,7 @@ Room state is in memory. It survives ordinary client reconnects while the server
 - Test every payout combination and the mixed Basic/Risky offer rule.
 - Test simultaneous offers, rejection, passing, timer expiry, reconnects, and private-message isolation.
 - Test all role bonuses and final scoring with several complete six-night games.
+
+## Custom lobby timing
+
+The room host can now set the role-reveal, night-phase, and morning/table-review durations in the lobby before starting. Settings are synchronized to everyone in the room and validated by the server.

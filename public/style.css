@@ -53,3 +53,70 @@ footer{letter-spacing:1.2px}
 .role-help-open:first-letter{font-size:1.15rem}.role-help-modal{position:fixed;inset:0;z-index:1000;background:rgba(4,5,12,.82);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}
 .role-help-modal.hidden{display:none}.role-help-card{position:relative;width:min(540px,100%);max-height:85vh;overflow:auto;padding:28px}.role-help-close{position:absolute;right:14px;top:10px;border:0;background:transparent;color:inherit;font-size:28px;cursor:pointer}.role-help-card h2{margin:8px 0}.role-help-progress{margin-top:12px;color:var(--muted,#aaa);font-size:.92rem;line-height:1.6}.role-action-panel{margin-bottom:14px}.role-action-panel h3{margin:6px 0}.role-action-row{display:flex;gap:8px;align-items:center;margin:12px 0}.role-action-row select{min-width:0;flex:1}.detective-history{font-size:.88rem;line-height:1.55;margin-top:12px}.detective-history:empty{display:none}.investigation-entry{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.1);padding:7px 0}.infected-marker{display:inline-block;color:#b7e6a4;font-size:.78rem;margin-left:5px;font-weight:700}.original-zombie-marker{color:#e5c27c}.rank-infection{font-size:.76rem;color:#b7e6a4;display:block;margin-top:4px}.role-notice{border-left:3px solid #b7e6a4;padding:9px 12px;margin:8px 0}
 @media(max-width:640px){.role-help-open{padding:6px 8px}.role-help-open span{display:none}.role-help-card{padding:22px 18px}.role-action-row{flex-wrap:wrap}.role-action-row select{width:100%;flex-basis:100%}}
+
+
+/* Detective investigation: clearer target control, readable history and role colour coding. */
+#detective-panel{position:relative;overflow:hidden;border-color:#5b4b32;background:linear-gradient(145deg,#17140f,#111114 62%);padding:24px}
+#detective-panel:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(#d6b875,#8b6d3d);opacity:.9}
+#detective-panel .section-kicker{color:#d7b878;letter-spacing:2.5px}
+#detective-panel h3{font-size:23px;margin:8px 0 5px}
+#detective-panel>p{font-size:13px;line-height:1.55;margin:0 0 17px}
+#detective-panel .role-action-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:0 0 17px}
+#investigation-target{width:100%;min-width:0;min-height:48px;padding:0 14px;color:#f0eae1;font-size:15px}
+#investigate-button{min-height:48px;padding:0 20px;font-size:13px;white-space:nowrap}
+#investigate-button:disabled{opacity:.48;cursor:not-allowed}
+#detective-history{margin-top:10px;border-top:1px solid #ffffff13;padding-top:13px;max-height:260px;overflow:auto;color:#aaa2a0;font-size:12px}
+#detective-history>b,#detective-history-help>b{display:block;color:#e9dfd0;font-size:12px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.investigation-entry{align-items:center;min-height:43px;padding:8px 2px;border-top:1px solid #ffffff0b}
+.investigation-entry>span{color:#c6c0bb;font-size:13px}
+.role-chip{display:inline-flex;align-items:center;justify-content:center;min-width:82px;padding:5px 10px;border:1px solid currentColor;border-radius:5px;font-size:11px;font-weight:800;letter-spacing:.25px;text-align:center;background:color-mix(in srgb,currentColor 12%,transparent)}
+.role-vampire{color:#f08091}.role-zombie{color:#9bd47c}.role-werewolf{color:#c5a2f0}.role-ghost{color:#a8d8e8}.role-dragon{color:#e7a65e}.role-mummy{color:#dfc77e}.role-detective{color:#8fc7c1}.role-serial-killer{color:#ee8e69}.role-unknown{color:#c3bdc7}
+.lobby-settings{display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:17px 0;padding:14px;border:1px solid #ffffff12;border-radius:6px;background:#09090b55}
+.settings-title{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;color:#e2c995;font-size:10px;font-weight:800;letter-spacing:1.7px;margin-bottom:4px}
+.settings-title span{color:#8e8679;font-size:8px}
+.lobby-settings label{align-self:center;color:#c8c0b8;font-size:11px}
+.lobby-settings label small{color:#817a73;margin-left:4px}
+.lobby-settings input{width:82px;min-height:34px;padding:5px 8px;text-align:center;font-size:12px}
+.lobby-settings .mini-btn,.lobby-settings .form-hint{grid-column:1/-1}
+.lobby-settings .mini-btn{justify-self:start;padding:8px 13px}
+.lobby-settings .form-hint{margin:0;font-size:9px}
+.host-settings-disabled{opacity:.72}
+.final-stage-label{margin:18px 0 10px;color:#bca477;font-size:10px;font-weight:800;letter-spacing:2px}
+.rank-name{min-width:0}
+.bonus-add{display:block;max-height:0;overflow:hidden;opacity:0;transform:translateY(5px);color:#9bd49e;font-size:10px;font-weight:800;letter-spacing:.3px;transition:max-height .35s ease,opacity .35s ease,transform .35s ease;margin-top:0}
+.rank-row.bonus-revealed .bonus-add{max-height:24px;opacity:1;transform:translateY(0);margin-top:5px}
+.rank-row.bonus-revealed .rank-score{animation:coin-pop .5s ease both}
+@keyframes coin-pop{0%{transform:scale(.88);color:#9bd49e}65%{transform:scale(1.12)}100%{transform:scale(1);color:#e5c995}}
+.rank-row{transition:background .3s ease,border-color .3s ease}
+.rank-row.bonus-revealed{background:#9bd49e08;border-color:#9bd49e26}
+@media(max-width:760px){
+  .lobby-grid{grid-template-columns:minmax(0,1fr)}
+  .launch-panel{min-width:0}
+  .game-layout{grid-template-columns:minmax(0,1fr)}
+  .game-layout .players-panel,.game-layout .center-column,.game-layout .chat-panel{grid-column:1;grid-row:auto}
+  .game-players{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .center-column{min-width:0}
+  .chat-panel{min-width:0}
+  .role-action-panel{min-width:0}
+}
+@media(max-width:480px){
+  main{padding-left:12px;padding-right:12px}
+  .phase-banner{align-items:center}
+  .phase-banner #phase-title{flex:1;min-width:0;font-size:16px}
+  .role-help-open{margin-left:0}
+  .game-players{grid-template-columns:1fr}
+  .game-player{padding:9px 0}
+  .game-player .player-meta b{font-size:11px}
+  .player-balance{font-size:15px}
+  #detective-panel{padding:19px 15px}
+  #detective-panel h3{font-size:21px}
+  #detective-panel .role-action-row{grid-template-columns:minmax(0,1fr)}
+  #investigate-button{width:100%}
+  .investigation-entry{align-items:flex-start;flex-direction:column;gap:6px;padding:10px 2px}
+  .role-chip{min-width:0}
+  .lobby-settings{grid-template-columns:minmax(0,1fr) 76px;padding:12px}
+  .rank-row{grid-template-columns:22px minmax(0,1fr) auto;gap:8px;padding:11px 9px}
+  .rank-name b{font-size:11px}
+  .rank-score{font-size:16px}
+  footer{gap:12px;flex-wrap:wrap}
+}
